@@ -9,6 +9,7 @@ const srcPath = resolve('app')
 const distPath = resolve('dist')
 const nodeModules = resolve('node_modules')
 const excludeNodeModules = /node_modules/
+const cssLibs = resolve(srcPath + '/styles/vendors')
 
 // Configs
 const babelConfig = require('../babel/babel.config')
@@ -48,7 +49,11 @@ const config = {
 				query: babelConfig
 			},
 			{
-				test: /\.l?[ec]ss$/,
+				test: /\.s?[ac]ss$/, // Vendor css and global styles
+				include: [
+					nodeModules,
+					cssLibs
+				],
 				use: [
 					{ loader: 'style-loader' },
 					{
@@ -65,9 +70,45 @@ const config = {
 						}
 					},
 					{
-						loader: 'less-loader',
+						loader: 'sass-loader',
 						options: {
 							sourceMap: true
+						}
+					}
+				]
+			},
+			{
+				test: /\.s?[ac]ss$/,
+				include: [
+					srcPath
+				],
+				exclude: [
+					excludeNodeModules,
+					cssLibs
+				],
+				use: [
+					{ loader: 'style-loader' },
+					{
+						loader: 'css-loader',
+						options: {
+							sourceMap: true,
+							importLoaders: 2
+						}
+					},
+					{
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true
+						}
+					},
+					{
+						loader: 'sass-loader',
+						options: {
+							sourceMap: true,
+							data: '@import "./config/styles/sass-config";',
+							includePaths: [
+								srcPath
+							]
 						}
 					}
 				]
@@ -143,7 +184,7 @@ const config = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			inject: 'body',
-			template: '../index.html'
+			template: 'index.html'
 		}),
 		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.HotModuleReplacementPlugin(),

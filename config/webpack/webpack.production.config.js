@@ -17,7 +17,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const extractGlobals = new ExtractTextPlugin('global-styles.css')
+const extractGlobals = new ExtractTextPlugin('styles/common-styles.css')
+const extractStyles = new ExtractTextPlugin('styles/page-styles.[hash:5].css')
 
 const config = {
 
@@ -43,53 +44,65 @@ const config = {
 				loader: 'babel-loader',
 				query: babelConfig
 			},
-			// {
-			// 	test: /\.less$/, //Main css extract
-			// 	include: [
-			// 		srcPath
-			// 	],
-			// 	exclude: [
-			// 		cssLibs, nodeModules
-			// 	],
-			// 	use: ExtractTextPlugin.extract({
-			// 		fallback: 'style-loader',
-			// 		use: [
-			// 			{
-			// 				loader: 'css-loader',
-			// 				options: {
-			// 					minimize: false,
-			// 					importLoaders: 2
-			// 				}
-			// 			},
-			// 			{
-			// 				loader: 'postcss-loader'
-			// 			},
-			// 			{
-			// 				loader: 'less-loader'
-			//
-			// 			}
-			// 		]
-			// 	})
-			// },
 			{
-				test: /\.l?[ec]ss$/, // Globals css extract
-				include: [ cssLibs, nodeModules ],
+				test: /\.s?[ac]ss$/, // Vendor and global styles
+				include: [
+					nodeModules,
+					cssLibs,
+				],
 				use: extractGlobals.extract({
 					fallback: 'style-loader',
 					use: [
 						{
 							loader: 'css-loader',
 							options: {
-								minimize: false,
+								sourceMap: false,
+								minimize: true
+							}
+						},
+						{
+							loader: 'postcss-loader',
+						},
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: false,
+
+							}
+						}
+					]
+				})
+			},
+			{
+				test: /\.s?[ac]ss$/,
+				include: [
+					srcPath
+				],
+				exclude: [
+					excludeNodeModules,
+					cssLibs
+				],
+				use: extractStyles.extract({
+					fallback: 'style-loader',
+					use: [
+						{
+							loader: 'css-loader',
+							options: {
 								importLoaders: 2
 							}
 						},
 						{
-							loader: 'postcss-loader'
+							loader: 'postcss-loader',
+
 						},
 						{
-							loader: 'less-loader'
-
+							loader: 'sass-loader',
+							options: {
+								data: '@import "./config/styles/sass-config";',
+								includePaths: [
+									srcPath
+								]
+							}
 						}
 					]
 				})
@@ -167,14 +180,9 @@ const config = {
 		new webpack.optimize.OccurrenceOrderPlugin(true),
 		new HtmlWebpackPlugin({
 			inject: 'body',
-			template: './index.html'
+			template: './app/index.html'
 		}),
-		extractGlobals,
-		new ExtractTextPlugin({
-			filename: 'styles/main.css',
-			allChunks: false,
-			disable: false
-		}),
+
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false
@@ -184,6 +192,8 @@ const config = {
 				NODE_ENV: JSON.stringify('production')
 			}
 		}),
+		extractGlobals,
+		extractStyles,
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
 				screw_ie8: true,

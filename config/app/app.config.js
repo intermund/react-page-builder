@@ -1,3 +1,6 @@
 module.exports = {
-	page_name: 'page test'
+	pricingPlans: {
+		static: 'STATIC',
+		residential: 'RESIDENTIAL'
+	}
 }
