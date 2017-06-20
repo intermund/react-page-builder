@@ -1,6 +1,10 @@
 module.exports = {
 	pricingPlans: {
-		static: 'STATIC',
-		residential: 'RESIDENTIAL'
+		static: {
+			name: 'GEOSURF STATIC'
+		},
+		residential: {
+			name: 'GEOSURF RESIDENTIAL'
+		}
 	}
 }

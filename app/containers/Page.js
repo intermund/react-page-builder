@@ -1,44 +1,82 @@
-import React, { Component } from 'react'
 import './Page.scss'
+import React, { Component } from 'react'
+import StaticPlans from '../components/StaticPlans'
+import ResidentialPlans from '../components/ResidentialPlans'
 
 class Page extends Component {
 
-	state = {
-		pageName: this.props.page,
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			plansToShow: 'res',
+			pageData: window.PAGE_DATA
+		}
+	}
+
+	setActivePlan = (plan) => {
+
+		this.setState({
+			plansToShow: plan
+		})
+	}
+
+	renderPlans = () => {
+		return this.state.plansToShow === 'res' ?
+			<ResidentialPlans />
+			:
+			<StaticPlans />
 	}
 
 	render() {
 
-		const { pageName } = this.state
+		const { page } = this.props
+		const { plansToShow, pageData } = this.state
 
 		return (
-			<div className={`page ${pageName} `}>
+			<div className={`page page-${page} `}>
 
-				<section className={`section top-section `}>
+				<section className={`section section-top`}>
 					<div className="wrapper">
 
-						<div className={``}>
-							Choose your plan to start
+						<div className={`heading av-special-heading-tag`}>
+							{ pageData.title }
 						</div>
 
-						<div className={``}>
+						<div className={`button-group`}>
 
-							<button className={`button`}>
-								GEOSURF <br/> STATIC <br/> PROXY
+							<button className={`button ${plansToShow === 'static' ? 'active' : ''}`}
+									onClick={ () => this.setActivePlan('static')}>
+								GEOSURF <br/> STATIC
 							</button>
 
-							<button className={`button`}>
-								GEOSURF <br/> RESIDENTIAL <br/> PROXY
+							<button className={`button ${plansToShow === 'res' ? 'active' : ''}`}
+									onClick={ () => this.setActivePlan('res')}>
+								GEOSURF <br/> RESIDENTIAL
 							</button>
 						</div>
 
 					</div>
 				</section>
 
-				<section className={`section plans-section`}>
+				<section className={`section section-plans`}>
 					<div className="wrapper">
 
-						Plans
+						{ this.renderPlans() }
+
+					</div>
+				</section>
+
+				<section className="section section-info">
+					<div className="wrapper">
+
+						<div className="contact-info">
+							<p>Can’t find what you are looking for? Let us know about your special requirement and one
+								of
+								our gateway professionals will contact you shortly!</p>
+							<a href="http://geosurf.com/contact/" className={`contact-us`}>Contact</a>
+						</div>
+
 
 					</div>
 				</section>

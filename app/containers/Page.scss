@@ -1,0 +1,178 @@
+.page {
+
+	padding-bottom: 100px;
+
+	.section-top {
+		padding: 100px 0 20px 0;
+		text-align: center;
+		background-image: linear-gradient(to bottom, #dfe9f3 0%, white 100%);
+
+		.heading {
+			font-size: 48px;
+			margin-bottom: 64px;
+			letter-spacing: -1px;
+			font-variant: all-petite-caps;
+
+		}
+		
+		.button-group {
+			display: flex;
+			justify-content: center;
+		}
+
+		.button {
+			width: 180px;
+			padding: 5px 0;
+			font-size: 14px;
+			margin-left: 5px;
+			transition: background .4s linear;
+			cursor: pointer;
+			border-radius: 3px;
+			outline: 0;
+			position: relative;
+			color: #fff;
+			background-color: #102c50;
+			box-shadow: 0 2px 5px 0 #102c50;
+
+			&.active {
+				background-color: #2980b9;
+				box-shadow: 0 4px 5px -1px #102c50;
+				font-weight: 200;
+				color: rgb(220, 255, 226);
+			}
+
+			&:hover {
+
+			}
+		}
+	}
+
+	.section-plans {
+		padding: 20px 0 40px 0;
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+		
+		.plans-wrapper {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			animation: animation 1500ms linear both;
+			z-index: 100;
+			background-color: #fff;
+
+			@include till-screen(996px) {
+				justify-content: center;
+			}
+
+		}
+
+		.plan {
+			flex-basis: 24.5%;
+			overflow: hidden;
+			border-radius: 3px;
+			box-shadow: 2px 2px 20px -7px blue;
+			padding-bottom: 20px;
+			position: relative;
+			min-height: 400px;
+			background-color: rgba(37, 72, 136, 0.08);
+			margin-bottom: 20px;
+
+			@include till-screen(996px) {
+				flex-basis: 40%;
+				margin: 0 10px 20px;
+			}
+
+			@include till-screen(650px) {
+				flex-basis: 70%;
+			}
+
+
+			* {
+				padding: 7px 5px;
+			}
+
+			&.favorite {
+				transform: scaleY(1.05);
+
+				.plan-name {
+					background-color: lighten(#102C50, 3%);
+				}
+			}
+
+			.plan-name {
+				font-size: 24px;
+				padding: 20px 0;
+				text-transform: uppercase;
+				font-weight: 100;
+				background-color: #102C50;
+				color: #fff;
+			}
+
+			div[class^='plan-']:not(:first-of-type) {
+				font-size: 16px;
+				font-weight: 400;
+				color: #2A2C2B;
+			}
+
+
+			.buy-btn {
+				background-color: #2980B9;
+				color: #fff;
+				padding: 10px 30px;
+				border-radius: 3px;
+				cursor: pointer;
+				font-weight: 100;
+				letter-spacing: 1px;
+				position: absolute;
+				bottom: 20px;
+				left: 0;
+				right: 0;
+				width: 200px;
+				margin: 0 auto;
+				outline: 0;
+				transition: background .5s;
+
+
+				&:hover {
+					background-color: darken(#2980B9, 10%);
+				}
+			}
+		}
+	}
+
+	.section-info {
+		
+		.contact-info {
+			display: flex;
+			align-items: center;
+			border: 1px solid lightgrey;
+			padding: 10px 30px;
+		}
+
+		.contact-us {
+			padding: 10px 30px;
+			background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+			color: #fff;
+			border-radius: 3px;
+			margin-left: 10px;
+			transition: all .4s linear;
+
+			&:hover {
+				background-image: linear-gradient(to bottom, #141972 0%, #1e3c72 1%, #1b3664 100%);
+			}
+		}
+	}
+
+	@keyframes animation {
+		0% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 500, 0, 1); }
+		6.31% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 308.097, 0, 1); }
+		12.51% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 189.467, 0, 1); }
+		18.82% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 114.438, 0, 1); }
+		25.03% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 68.949, 0, 1); }
+		37.54% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 23.97, 0, 1); }
+		50.05% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 7.873, 0, 1); }
+		75.08% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0.635, 0, 1); }
+		100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	}
+}

@@ -18,7 +18,7 @@ const ExtendedDefinePlugin = require('extended-define-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const extractGlobals = new ExtractTextPlugin('styles/common-styles.css')
-const extractStyles = new ExtractTextPlugin('styles/page-styles.[hash:5].css')
+const extractStyles = new ExtractTextPlugin('styles/page-pricing.css')
 
 const config = {
 

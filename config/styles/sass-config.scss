@@ -1,1 +1,14 @@
-$color: blue;
+$darkBlue: #102c50;
+$lightBlue: #2980b9;
+
+@mixin from-screen($size) {
+	@media screen and (min-width: $size) {
+		@content;
+	}
+}
+
+@mixin till-screen($size) {
+	@media screen and (max-width: $size) {
+		@content;
+	}
+}
